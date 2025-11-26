@@ -7,7 +7,6 @@ A Python script that monitors Striive job listings and sends email notifications
 - Monitors Striive job listings every day at 15:00 UTC via GitHub Actions
 - Filters jobs containing "engineer" or "data" in the title
 - Sends email notifications via Postmark API
-- Tracks seen job IDs to avoid duplicate notifications
 - Production-ready with error handling, logging, and retry logic
 
 ## Setup
@@ -58,9 +57,7 @@ A Python script that monitors Striive job listings and sends email notifications
 
 1. Fetches job listings from the Striive API
 2. Filters jobs containing "engineer" or "data" in the title
-3. Compares against previously seen job IDs
-4. Sends email notifications for new jobs via Postmark
-5. Saves seen job IDs to persist state between runs
+3. Sends email notifications for new jobs via Postmark
 
 ## Logging
 
