@@ -1,0 +1,35 @@
+name: Job Monitor
+
+on:
+  schedule:
+    # Run once per day at 15:00 UTC
+    - cron: '0 15 * * *'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run job monitor
+        env:
+          POSTMARK_API_KEY: ${{ secrets.POSTMARK_API_KEY }}
+          POSTMARK_FROM_EMAIL: ${{ secrets.POSTMARK_FROM_EMAIL }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          STRIIVE_COOKIE: ${{ secrets.STRIIVE_COOKIE }}
+          STRIIVE_INBOX_URL: ${{ secrets.STRIIVE_INBOX_URL }}
+        run: python main.py
+
