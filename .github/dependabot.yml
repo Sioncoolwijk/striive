@@ -1,15 +1,26 @@
-# Managed centrally. Grouped updates keep PR volume low.
-# open-pull-requests-limit: 0 disables routine version PRs but
-# Dependabot SECURITY updates are still delivered.
+# Security-only. open-pull-requests-limit: 0 zet routine version-update
+# PRs uit; security-updates lopen daar niet onder en komen dus wel door.
+# De group met applies-to: security-updates bundelt alle securityfixes
+# van deze ecosystem/directory in EEN PR.
+# Geen `ignore` op majors: die geldt ook voor security-updates en zou een
+# majorfix (bijv. next 14 -> 16) kunnen tegenhouden.
 version: 2
 updates:
   - package-ecosystem: "pip"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
     open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "monthly"
+      interval: "weekly"
     open-pull-requests-limit: 0
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
